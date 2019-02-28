@@ -10,6 +10,7 @@ To compile the source code and run a simulation you may run:
 
 .. bash:
 
+   $ xz --decompress - < dockerimage__polymer_radiolysis_pub.tar.xz | docker image load
    $ ./scripts/run_dockerized_build_and_test.sh
 
 

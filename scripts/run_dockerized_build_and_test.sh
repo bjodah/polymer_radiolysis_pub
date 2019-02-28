@@ -12,15 +12,17 @@ if [[ $IN_DOCKER == "1" ]]; then
     echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
     #su -l myuser -c "cd /work; $RUNCMD"
     mkdir /tmp/build; cd /tmp/build
+    cp -r /work/src .
     cp -r /work/external .
-    make -C external
-    cp /work/src/* .
-    cp -r /opt/pykinetgine-0.3.5/external/* .
+    make -C ./external/
+    cp external/{Clara/include/*.hpp,nlohmann_json/json.hpp} ./src/
+    cd src/
+    cp -r /opt/pykinetgine-0.3.5/external/*/include/* .
     cp -r /opt/pykinetgine-0.3.5/kinetgine .
     cp -r /opt/syme-*/{include,lib}/* .
     make
     cd /work/tests
-    PATH=/tmp/build:$PATH make -f rad.mk rad-res.png
+    PATH=/tmp/build/src:$PATH LD_LIBRARY_PATH=/tmp/build/src:$LD_LIBRARY_PATH make -f rad.mk rad-res.png
 else
     if groups | grep docker >/dev/null; then
         DOCKERCMD=docker

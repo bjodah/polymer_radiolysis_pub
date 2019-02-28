@@ -1,4 +1,4 @@
-all: catch nlohmann_json cereal Clara
+all: nlohmann_json Clara
 
 .PHONY: all
 
